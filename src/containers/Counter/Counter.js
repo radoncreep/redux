@@ -36,7 +36,7 @@ class Counter extends Component {
                 <CounterControl label="Add 10" clicked={this.props.onAddCounter}  />
                 <CounterControl label="Subtract 15" clicked={this.props.onSubtractCounter}  />
                 <hr/>
-                <button onClick={this.props.onStoreResult}>Store Result</button>
+                <button onClick={() => this.props.onStoreResult(this.props.ctr)}>Store Result</button>
                 <ul>
                     {this.props.counterResult.map(storedResult => {
                       return <li key={storedResult.id} onClick={() => this.props.onDeleteResult(storedResult.id)}>{storedResult.value}</li> 
@@ -49,8 +49,8 @@ class Counter extends Component {
 
 const mapStateToProps = state => {
     return {
-        ctr: state.counter,
-        counterResult: state.results
+        ctr: state.ctr.counter,
+        counterResult: state.rlt.results
     };
 };
 
@@ -61,7 +61,7 @@ const mapDispatchToProps = dispatch => { // takes in dispatch which is a helper 
         onDecrementCounter: () => dispatch({ type: actionTypes.DECREMENT, value: 1 }),
         onAddCounter: () => dispatch({ type: actionTypes.ADD , value: 10 }), // value could be used inside a payload obj but here it is a payload itself, an addtional data passed into action
         onSubtractCounter: () => dispatch({ type: actionTypes.SUBTRACT, value: 15 }),
-        onStoreResult: () => dispatch({ type: actionTypes.STORE_RESULT }),
+        onStoreResult: (results) => dispatch({ type: actionTypes.STORE_RESULT, value: results }),
         onDeleteResult: (id) => dispatch({ type: actionTypes.DELETE_RESULT, resultId: id })
     };
 };
